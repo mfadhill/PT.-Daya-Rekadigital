@@ -14,14 +14,15 @@ datasource db {
 }
 
 model Customer {
-  id           Int           @id @default(autoincrement())
-  name         String
-  email        String        @unique
-  level        CustomerLevel @default(Warga)
-  phone        String?
-  createdAt    DateTime      @default(now())
-  updatedAt    DateTime      @updatedAt
-  transactions Transaction[]
+  id                Int           @id @default(autoincrement())
+  name              String
+  email             String        @unique
+  level             CustomerLevel @default(Warga)
+  phone             String?
+  totalTransactions Int?          @default(0)
+  createdAt         DateTime      @default(now())
+  updatedAt         DateTime      @updatedAt
+  transactions      Transaction[]
 }
 
 model Product {

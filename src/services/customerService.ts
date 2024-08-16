@@ -70,3 +70,12 @@ export const getCustomerDetails = async (id: number) => {
         },
     });
 };
+
+export const getTotalPriceForCustomer = async (customerId: number) => {
+
+    const transactions = await prisma.transaction.findMany({
+        where: { customerId: customerId },
+    });
+    const totalPrice = transactions.reduce((acc, transaction) => acc + transaction.totalPrice, 0);
+    return totalPrice;
+};

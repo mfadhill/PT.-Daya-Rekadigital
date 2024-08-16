@@ -72,14 +72,11 @@ export const deleteCustomer = async (req: Request, res: Response) => {
 export const getCustomerDetail = async (req: Request, res: Response): Promise<void> => {
     try {
         const customerId = parseInt(req.params.id, 10);
-        
-        // Validasi ID
+
         if (isNaN(customerId)) {
             res.status(400).json({ error: 'Invalid customer ID' });
             return;
         }
-
-        // Ambil detail customer
         const customer = await customerService.getCustomerDetails(customerId);
 
         if (customer) {
@@ -90,5 +87,16 @@ export const getCustomerDetail = async (req: Request, res: Response): Promise<vo
     } catch (error) {
         console.error('Error fetching customer details:', error); // Logging for debugging
         res.status(500).json({ error: 'Error fetching customer details' });
+    }
+};
+
+export const getTotalPrice = async (req: Request, res: Response) => {
+    const customerId = parseInt(req.params.customerId, 10);
+
+    try {
+        const totalPrice = await customerService.getTotalPriceForCustomer(customerId);
+        res.json({ totalPrice });
+    } catch (error) {
+        res.status(500).json({ error });
     }
 };
